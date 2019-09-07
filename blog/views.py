@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
+from django.views.decorators.csrf import csrf_exempt
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -40,6 +41,7 @@ def post_edit(request, pk):
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
 
+@csrf_exempt
 def save_birth(request):
     return JsonResponse({
         "text": "weather is good",
