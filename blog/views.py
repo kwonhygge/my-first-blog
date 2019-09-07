@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
+from django.http import JsonResponse
 from .models import Post
 from .forms import PostForm
 from django.shortcuts import redirect
@@ -38,3 +39,8 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+def save_birth(request):
+    return JsonResponse({
+        "text": "weather is good",
+    })
