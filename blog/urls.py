@@ -9,5 +9,6 @@ urlpatterns = [
     path('post/<int:pk>/edit/', views.post_edit, name='post_edit'),
     path('command/register',views.save_birth, name='save_birth'),
     url(r'^drafts/$', views.post_draft_list, name='post_draft_list'),
+    url(r'^post/(?P<pk>\d+)/remove/$', views.post_remove, name='post_remove'),
 
 ]
