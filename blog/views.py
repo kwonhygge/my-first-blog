@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 from django.http import JsonResponse
-from .models import Post
+from .models import Post, SaveBirth
 from .forms import PostForm
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
+import datetime
+
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -43,6 +45,18 @@ def post_edit(request, pk):
 
 @csrf_exempt
 def save_birth(request):
+    user_name = request.POST.get("user_name", None)
+    birthday = request.POST.get("text", None)
+
+    birth_day = datetime.datetime.strptime(birthday, "%Y/%M/%d").date()
+
+    SaveBirth.objects.create(
+        name=user_name,
+        birth_day=birth_day,
+    )
+
     return JsonResponse({
-        "text": "weather is good",
+        'text': 'created',
+        'message' : user_name,
+        'birthday' : birth_day,
     })
